@@ -3,7 +3,7 @@ package domain.services.movement.interpreter
 import domain.model.{Board, Coordinate, Team}
 import domain.services.movement.algebra.ChessLanguage
 
-object ChessLanguageInterpreter {
+object ChessLanguage {
   import MoveInterpreter._
   import domain.services.movement.algebra.ChessLanguage._
   def interpret(
@@ -38,7 +38,7 @@ object ChessLanguageInterpreter {
         else Seq()
 
     }).filter {
-      case Coordinate(x, y) if x < 0 || y < 0 || x > 12 || y > 12 => false
+      case Coordinate(x, y) if x < 1 || y < 1 || x > 8 || y > 8 => false
       case validCoordinate => true
     }
   }

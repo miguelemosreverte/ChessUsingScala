@@ -2,8 +2,7 @@ package domain.services.rules
 
 import ChessRules._
 import domain.model.{Board, Coordinate}
-import domain.services.movement.algebra.ChessLanguage
-import domain.services.movement.interpreter.ChessLanguageInterpreter
+import domain.services.movement.interpreter.ChessLanguage
 
 object MovementRules extends ChessRules {
   def rules(implicit move: MovePiece): Either[ChessRules.MoveRejection, Board] =
@@ -15,7 +14,7 @@ object MovementRules extends ChessRules {
     def isValid = {
       case MovePiece(board, from, to, piece) =>
         val availableMoves: Set[Coordinate] =
-          piece.moves.flatMap(e => ChessLanguageInterpreter.interpret(from, e)(board, piece.team))
+          piece.moves.flatMap(e => ChessLanguage.interpret(from, e)(board, piece.team))
         availableMoves contains to
 
     }
