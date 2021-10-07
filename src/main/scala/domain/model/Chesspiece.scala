@@ -1,4 +1,4 @@
-package domain.model.chesspieces
+package domain.model
 
 import domain.model.chessboard.Coordinate
 
@@ -17,7 +17,6 @@ trait Chesspiece {
       case _ => false
     }
 
-  
 }
 
 object Chesspiece {

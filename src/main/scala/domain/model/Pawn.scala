@@ -1,4 +1,4 @@
-package domain.model.chesspieces
+package domain.model
 
 import domain.model.chessboard.Coordinate.Moves
 import domain.model.chessboard.Coordinate
@@ -7,7 +7,7 @@ case class Pawn(coordinate: Coordinate, id: String, givenTeam: Chesspiece.Team) 
   val rank = 0
   override implicit val team: Chesspiece.Team = givenTeam
   override val availableMoves: Seq[Coordinate] = Seq(
-    coordinate.forward,
+    coordinate.forward
   )
   override def move(coordinate: Coordinate): Chesspiece = copy(
     coordinate = coordinate

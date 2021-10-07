@@ -1,7 +1,7 @@
 package domain.services
 
 import domain.model.chessboard.Chessboard
-import domain.model.chesspieces.Chesspiece.Team
+import domain.model.Chesspiece.Team
 
 class MoveForwardByRank(implicit team: Team) extends Move {
   def move(chessboard: Chessboard): Chessboard = {

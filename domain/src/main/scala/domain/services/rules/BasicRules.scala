@@ -1,7 +1,7 @@
-package domain.model.chesspieces.rules
-import domain.model.chesspieces._
-import domain.model.chesspieces.rules.ChessRules._
+package domain.services.rules
 
+import ChessRules._
+import domain.model.Board
 
 object BasicRules extends ChessRules {
   def rules(implicit move: MovePiece): Either[ChessRules.MoveRejection, Board] =

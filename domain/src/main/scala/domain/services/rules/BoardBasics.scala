@@ -1,11 +1,11 @@
-package domain.model.chesspieces.rules
+package domain.services.rules
 
-import domain.model.chesspieces.rules.ChessRules._
-import domain.model.chesspieces._
+import ChessRules._
+import domain.model.{Board, Coordinate, PlacedPiece}
 
-object BoardBasics  {
+object BoardBasics {
 
-  def getPiece(board: Board, coordinate: Coordinate): Either[`Piece is not in board`.type , PlacedPiece] =
+  def getPiece(board: Board, coordinate: Coordinate): Either[`Piece is not in board`.type, PlacedPiece] =
     board.placedPieces.get(coordinate) match {
       case Some(piece) => Right(piece)
       case None => Left(`Piece is not in board`)

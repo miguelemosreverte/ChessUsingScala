@@ -1,13 +1,17 @@
-package domain.model.chesspieces
+package domain.model
 
+import domain.model.Moves._
+import domain.services.movement.algebra.ChessLanguage._
+import domain.services.movement.algebra.ChessLanguage
 
-sealed trait PlacedPiece extends Team.HasTeam with Moves.HasMoves {
+sealed trait PlacedPiece {
+  val team: Team
+  val moves: Set[ChessLanguage]
   val piece: Piece
 }
 object PlacedPiece {
   case class PlacedPawn(team: Team) extends PlacedPiece {
     val piece = Piece.Pawn
-    import Moves._
     val moves = Set(
       withPredicate(Jump(Seq(Forward, Forward)), { context =>
         context.`untouched from the start of the game` &&
@@ -21,7 +25,6 @@ object PlacedPiece {
 
   case class PlacedHorse(team: Team) extends PlacedPiece {
     val piece = Piece.Horse
-    import Moves._
     val moves = Set(
       Jump(Seq(Forward, Forward, Right)),
       Jump(Seq(Forward, Forward, Left)),
@@ -34,44 +37,47 @@ object PlacedPiece {
     )
   }
   case class PlacedTower(team: Team) extends PlacedPiece {
-    val piece = Piece.Tower
+    override val moves = PlacedTower.towerMoves
     import PlacedTower._
-    override val moves = towerMoves
+    val piece = Piece.Tower
   }
+
+  case class PlacedRook(team: Team) extends PlacedPiece {
+    override val moves = PlacedRook.rookMoves
+    import PlacedRook._
+    val piece = Piece.Rook
+  }
+
+  case class PlacedQueen(team: Team) extends PlacedPiece {
+    val piece = Piece.Queen
+    val moves = PlacedTower.towerMoves ++ PlacedRook.rookMoves
+  }
+
+  case class PlacedKing(team: Team) extends PlacedPiece {
+    val piece = Piece.King
+    val moves = PlacedKing.moves
+  }
+
   object PlacedTower {
-    import Moves._
-    val towerMoves: Set[DomanSpecificLanguage] = Set(
+    val towerMoves: Set[ChessLanguage] = Set(
       Line(Forward),
       Line(Backwards),
       Line(Right),
       Line(Left)
     )
   }
-  case class PlacedRook(team: Team) extends PlacedPiece {
-    val piece = Piece.Rook
-    import PlacedRook._
-    override val moves = rookMoves
-  }
+
   object PlacedRook {
-    import Moves._
-    val rookMoves: Set[DomanSpecificLanguage] = Set(
+    val rookMoves: Set[ChessLanguage] = Set(
       Line(diagonals.ForwardRight),
       Line(diagonals.ForwardLeft),
       Line(diagonals.BackwardsRight),
       Line(diagonals.BackwardsLeft)
     )
   }
-  case class PlacedQueen(team: Team) extends PlacedPiece {
-    val piece = Piece.Queen
-    val moves = PlacedTower.towerMoves ++ PlacedRook.rookMoves
-  }
-  case class PlacedKing(team: Team) extends PlacedPiece {
-    val piece = Piece.King
-    val moves = PlacedKing.moves
-  }
+
   object PlacedKing {
-    import Moves._
-    val moves: Set[DomanSpecificLanguage] = Set(
+    val moves: Set[ChessLanguage] = Set(
       Single(Forward),
       Single(Backwards),
       Single(Right),

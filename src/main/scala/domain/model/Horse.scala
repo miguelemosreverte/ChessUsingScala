@@ -1,4 +1,4 @@
-package domain.model.chesspieces
+package domain.model
 
 import domain.model.chessboard.Coordinate.Moves
 import domain.model.chessboard.Coordinate
@@ -14,7 +14,7 @@ case class Horse(coordinate: Coordinate, id: String, givenTeam: Chesspiece.Team)
     coordinate.right.right.backward,
     coordinate.right.right.forward,
     coordinate.left.left.forward,
-    coordinate.left.left.backward,
+    coordinate.left.left.backward
   )
 
   override def move(coordinate: Coordinate): Chesspiece = copy(
